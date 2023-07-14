@@ -10,6 +10,9 @@ class Solution {
                 s = mid + 1;
             }
         }
+        //when condition will be violated
+        //i.e s = e+1 => N
+        //N%N will return 0 hence first element of array
         return letters[s % letters.length];
     }
 }
