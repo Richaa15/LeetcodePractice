@@ -1,44 +1,30 @@
 class Solution {
-    private List<String> solve(String digits, String[] arr) {
-        if (digits.length() == 0) {
-            List<String> bs = new ArrayList<>();
-            bs.add("");
-            return bs;
+    List<String> res = null;
+    String [] strMap = {"0","1","abc", "def","ghi","jkl","mno","pqrs","tuv","wxyz"};
+    public List<String> letterCombinations(String digits) {
+        res = new ArrayList<>();
+        if(digits.length() == 0){
+            return res;
         }
-
-        char c = digits.charAt(0);
-        String a = arr[c - '0'];
-        String smallinput = digits.substring(1);
-        List<String> rest = solve(smallinput, arr);
-        List<String> res = new ArrayList<>();
-        for (String x : rest) {
-            for (char x1 : a.toCharArray()) {
-                res.add(x1 + x);
-            }
-        }
+        dfs(0,digits,new StringBuilder());
         return res;
     }
 
-    private List<String> ans = new ArrayList<>();
+    void dfs(int length ,String digits,StringBuilder temp){
 
-    private void solve2(String digits, String[] arr, int i, String com) {
-        if (i == digits.length()) {
-            ans.add(com);
-            return;
+        if(length == digits.length()){
+            res.add(temp.toString());
+            return; 
         }
-        char c = digits.charAt(i);
-        String a = arr[c - '0'];
-        for (char x1 : a.toCharArray()) {
-            solve2(digits, arr, i + 1, com + x1);
-        }
-    }
 
-    public List<String> letterCombinations(String digits) {
-        List<String> a = new ArrayList<>();
-        if (digits.length() == 0)
-            return a;
-        String[] arr = {"0", "0", "abc", "def", "ghi", "jkl", "mno", "pqrs", "tuv", "wxyz"};
-        solve2(digits, arr, 0, "");
-        return ans;
+        char ch = digits.charAt(length);
+        String str = strMap[ch -'0'];
+
+        for(char c:str.toCharArray()){
+            temp.append(c);
+            dfs(length+1,digits,temp);
+            temp.deleteCharAt(temp.length()-1);
+        }
+
     }
 }
