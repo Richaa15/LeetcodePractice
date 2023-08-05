@@ -1,46 +1,33 @@
 class Solution {
     public List<Integer> spiralOrder(int[][] matrix) {
-        List<Integer> result = new ArrayList<>();
-        
-        if (matrix == null || matrix.length == 0 || matrix[0].length == 0) {
-            return result;
-        }
-        
-        int rowBegin = 0;
-        int rowEnd = matrix.length - 1;
-        int colBegin = 0;
-        int colEnd = matrix[0].length - 1;
-        
-        while (rowBegin <= rowEnd && colBegin <= colEnd) {
-            // Traverse right
-            for (int i = colBegin; i <= colEnd; i++) {
-                result.add(matrix[rowBegin][i]);
+        int n = matrix.length;
+        int m = matrix[0].length;
+        int top = 0; int bottom = n-1;
+        int left = 0; int right = m-1;
+        List<Integer> ans = new ArrayList<Integer>();
+
+        while(top <= bottom && left <= right){
+            for(int i = left; i <= right; i++){
+                ans.add(matrix[top][i]);
             }
-            rowBegin++;
-            
-            // Traverse down
-            for (int i = rowBegin; i <= rowEnd; i++) {
-                result.add(matrix[i][colEnd]);
+            top++;
+            for(int i = top; i <= bottom; i++){
+                ans.add(matrix[i][right]);
             }
-            colEnd--;
-            
-            // Traverse left
-            if (rowBegin <= rowEnd) {
-                for (int i = colEnd; i >= colBegin; i--) {
-                    result.add(matrix[rowEnd][i]);
+            right--;
+            if(top <= bottom){
+                for(int i = right; i >= left; i--){
+                    ans.add(matrix[bottom][i]);
                 }
-                rowEnd--;
+                bottom--;
             }
-            
-            // Traverse up
-            if (colBegin <= colEnd) {
-                for (int i = rowEnd; i >= rowBegin; i--) {
-                    result.add(matrix[i][colBegin]);
+            if(left <= right){
+                for(int i = bottom; i >= top; i--){
+                    ans.add(matrix[i][left]);
                 }
-                colBegin++;
+                left++;
             }
         }
-        
-        return result;
+        return ans;
     }
 }
