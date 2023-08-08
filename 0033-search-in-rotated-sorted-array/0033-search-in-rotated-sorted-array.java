@@ -15,9 +15,9 @@ class Solution {
         }
     
         // Binary search over elements on the pivot element's left
-        int answer = binarySearch(nums, 0, left - 1, target);
-        if (answer != -1) {
-            return answer;
+        int ans = binarySearch(nums, 0, left - 1, target);
+        if (ans != -1) {
+            return ans;
         }
         
         // Binary search over elements on the pivot element's right
@@ -27,13 +27,13 @@ class Solution {
     // Binary search over an inclusive range [left_boundary ~ right_boundary]
     private int binarySearch(int[] nums, int l, int r, int target) {
         while (l <= r) {
-            int mid = (l + r) / 2;
-            if (nums[mid] == target) {
-                return mid;
-            } else if (nums[mid] > target) {
-                r = mid - 1;
+            int m = (l + r) / 2;
+            if (nums[m] == target) {
+                return m;
+            } else if (nums[m] > target) {
+                r = m - 1;
             } else {
-                l = mid + 1;
+                l = m + 1;
             }
         }
         return -1;
