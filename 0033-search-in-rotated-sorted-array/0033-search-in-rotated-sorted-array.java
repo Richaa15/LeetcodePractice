@@ -4,6 +4,7 @@ class Solution {
         int left = 0, right = n - 1;
         
         // Find the index of the pivot element (the smallest element)
+        
         while (left <= right) {
             int mid = (left + right) / 2;
             if (nums[mid] > nums[n - 1]) {
@@ -24,15 +25,15 @@ class Solution {
     }
     
     // Binary search over an inclusive range [left_boundary ~ right_boundary]
-    private int binarySearch(int[] nums, int left, int right, int target) {
-        while (left <= right) {
-            int mid = (left + right) / 2;
+    private int binarySearch(int[] nums, int l, int r, int target) {
+        while (l <= r) {
+            int mid = (l + r) / 2;
             if (nums[mid] == target) {
                 return mid;
             } else if (nums[mid] > target) {
-                right = mid - 1;
+                r = mid - 1;
             } else {
-                left = mid + 1;
+                l = mid + 1;
             }
         }
         return -1;
