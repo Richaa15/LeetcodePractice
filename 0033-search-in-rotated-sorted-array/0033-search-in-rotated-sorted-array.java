@@ -24,8 +24,7 @@ class Solution {
     }
     
     // Binary search over an inclusive range [left_boundary ~ right_boundary]
-    private int binarySearch(int[] nums, int leftBoundary, int rightBoundary, int target) {
-        int left = leftBoundary, right = rightBoundary;
+    private int binarySearch(int[] nums, int left, int right, int target) {
         while (left <= right) {
             int mid = (left + right) / 2;
             if (nums[mid] == target) {
