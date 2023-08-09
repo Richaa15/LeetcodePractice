@@ -1,7 +1,8 @@
 class Solution {
     public int strStr(String haystack, String needle) {
         int n =0;
-        for(int i =0 ; i<haystack.length(); i++) {
+        int nLen = needle.length(), hLen  = haystack.length();
+        for(int i =0 ; i<hLen; i++) {
             if(haystack.charAt(i) == needle.charAt(n)) {
                 n++;
             }else{
@@ -9,7 +10,7 @@ class Solution {
                 n=0;
             }
 
-            if(n == needle.length()){
+            if(n == nLen){
                 return i-n+1;
             }
         }
