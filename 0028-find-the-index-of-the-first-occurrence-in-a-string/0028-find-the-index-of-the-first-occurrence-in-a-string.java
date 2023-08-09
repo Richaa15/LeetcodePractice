@@ -1,6 +1,6 @@
 class Solution {
     public int strStr(String haystack, String needle) {
-        int h = 0, n =0;
+        int n =0;
         for(int i =0 ; i<haystack.length(); i++) {
             if(haystack.charAt(i) == needle.charAt(n)) {
                 n++;
