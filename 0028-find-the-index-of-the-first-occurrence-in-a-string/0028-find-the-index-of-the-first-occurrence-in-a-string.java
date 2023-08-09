@@ -1,33 +1,25 @@
 class Solution {
     public int strStr(String haystack, String needle) {
-        int h = 0;
-        int n = 0;
-        int match = 0;
-        while(h < haystack.length())
-        {
-            if(haystack.charAt(h) != needle.charAt(n))
-            {
-                if(n != 0)
-                {
-                    h = match;
-                }
-                h++;
-                n = 0;
+        int hLen = haystack.length();
+        int nLen = needle.length();
+        int nIndex = 0;
+        for(int i=0; i<hLen; i++){
+            // as long as the characters are equal, increment needleIndex
+            if(haystack.charAt(i)==needle.charAt(nIndex)){
+                nIndex++;
             }
-            else
-            {
-                if(n == 0)
-                {
-                    match = h;
-                }
-                h++;
-                n++;
-                if(n >= needle.length())
-                {
-                    return match;
-                }
+            else{
+                // start from the next index of previous start index
+                i=i-nIndex;
+                // needle should start from index 0
+                nIndex=0;
+            }
+            // check if needleIndex reached needle length
+            if(nIndex==nLen){
+                // return the first index
+                return i-nLen+1;
             }
         }
         return -1;
-   }
+    }
 }
