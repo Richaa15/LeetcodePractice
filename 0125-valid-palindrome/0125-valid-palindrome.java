@@ -3,7 +3,7 @@ class Solution {
         if(s.isEmpty()) {
             return true;
         }
-        //l=star, e =end
+        //l=start, e =end
         int l  = 0, e = s.length() - 1;
         
         while(l<=e) {
