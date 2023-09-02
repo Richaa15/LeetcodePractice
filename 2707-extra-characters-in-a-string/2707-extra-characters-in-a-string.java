@@ -1,20 +1,26 @@
 class Solution {
+    private int[] dp = new int[51]; // Initialize dp array with 0 values
+
     public int minExtraChar(String s, String[] dictionary) {
-        int n = s.length();
-        HashSet<String> set = new HashSet<>();
-        for (String word : dictionary) set.add(word);
-        int[] dp = new int[n + 1];
-        for (int i = n - 1; i >= 0; i--) {
-            StringBuilder cur = new StringBuilder();
-            int mini = n;
-            for (int idx = i; idx < n; idx++) {
-                cur.append(s.charAt(idx));
-                int curSize = set.contains(cur.toString()) ? 0 : cur.length();
-                int nextSize = dp[idx + 1];
-                mini = Math.min(mini, curSize + nextSize);
-            }
-            dp[i] = mini;
+        Arrays.fill(dp, -1); // Initialize dp array with -1 values
+        return minExtraCharHelper(s, dictionary, 0);
+    }
+
+    private int minExtraCharHelper(String s, String[] dictionary, int i) {
+        if (i == s.length()) {
+            return 0;
         }
-        return dp[0];
+
+        if (dp[i] == -1) {
+            dp[i] = 1 + minExtraCharHelper(s, dictionary, i + 1); // Initialize with one extra character
+
+            for (String w : dictionary) {
+                if (i + w.length() <= s.length() && s.substring(i, i + w.length()).equals(w)) {
+                    dp[i] = Math.min(dp[i], minExtraCharHelper(s, dictionary, i + w.length())); // Update if a word in the dictionary is found
+                }
+            }
+        }
+
+        return dp[i]; // Return the minimum extra characters starting from position i
     }
 }
