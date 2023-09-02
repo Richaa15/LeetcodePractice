@@ -1,26 +1,27 @@
 class Solution {
-    private int[] dp = new int[51]; // Initialize dp array with 0 values
-
     public int minExtraChar(String s, String[] dictionary) {
-        Arrays.fill(dp, -1); // Initialize dp array with -1 values
-        return minExtraCharHelper(s, dictionary, 0);
+        int[] memo = new int[s.length()];
+        Arrays.fill(memo, -1);
+        
+        return backtrack(s, dictionary, 0, memo);
     }
 
-    private int minExtraCharHelper(String s, String[] dictionary, int i) {
-        if (i == s.length()) {
-            return 0;
+    public int backtrack(String s, String[] dict, 
+            int startInx, int[] memo) {
+        if (startInx == s.length()) return 0;
+        if (memo[startInx] != -1) return memo[startInx];
+
+        int res = Integer.MAX_VALUE;
+        String curr = s.substring(startInx);
+        for (String candidate : dict) {
+            if(curr.startsWith(candidate)) {
+                res = Math.min(res, backtrack(s, dict, startInx + candidate.length(), memo));
+            } 
         }
+        res = Math.min(res, 1 + backtrack(s, dict, startInx + 1, memo));
+        
+        memo[startInx] = res;
 
-        if (dp[i] == -1) {
-            dp[i] = 1 + minExtraCharHelper(s, dictionary, i + 1); // Initialize with one extra character
-
-            for (String w : dictionary) {
-                if (i + w.length() <= s.length() && s.substring(i, i + w.length()).equals(w)) {
-                    dp[i] = Math.min(dp[i], minExtraCharHelper(s, dictionary, i + w.length())); // Update if a word in the dictionary is found
-                }
-            }
-        }
-
-        return dp[i]; // Return the minimum extra characters starting from position i
+        return res;
     }
 }
