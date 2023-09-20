@@ -11,7 +11,7 @@ public class Solution {
         int maxLen = 0, curSum = 0, left = 0;
         
         // Iterate through the nums array using the right pointer.
-        for (int right = 0; right < n; ++right) {
+        for (int right = 0; right < n; right++) {
             // Incrementally add elements to curSum as long as curSum is less than or equal to the target.
             curSum += nums[right];
             
