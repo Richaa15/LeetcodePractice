@@ -1,26 +1,26 @@
 class Solution {
-    public String decodeAtIndex(String s, int k) {
-        int n = s.length();
-        long len = 0;
-
-        for(char c : s.toCharArray()){
-            if(Character.isDigit(c)){
-                len *= (c - '0');
-            }
-            else len++;
-        }
-
-        for(int i=n-1;i>=0;i--){
-            char c = s.charAt(i);
-            if(Character.isDigit(c)){
-                len = len / (c - '0'); 
-                k %= len;
-            }
-            else {
-                if(k == 0 || k == len) return Character.toString(c);
-                len --;
+    public String decodeAtIndex(String encodedString, int k) {
+       long size = 0;
+        char[] s = encodedString.toCharArray();
+        for(int i = 0; i< s.length; i++){
+            if(Character.isDigit(s[i])){
+                size = (size*(s[i] - '0'));
+            }else{
+                size++;
             }
         }
-        return "";
+        int n = s.length;
+        for(int i =n-1; i>=0; i--){
+            k %= size;
+            if(k ==0 && Character.isLetter(s[i]) || k== size && Character.isLetter(s[i])){
+               return Character.toString(s[i]);
+                }
+            if(Character.isDigit(s[i])){
+                size /= (s[i] - '0');
+            }else{
+                size --;
+}
+        }
+        return null;
     }
 }
