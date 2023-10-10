@@ -17,30 +17,16 @@ class Solution {
             
         Arrays.sort(newNums);
         
+        int j = 0;
         for (int i = 0; i < newNums.length; i++) {
-            int left = newNums[i];
-            int right = left + n - 1;
-            int j = binarySearch(newNums, right);
+            while (j < newNums.length && newNums[j] < newNums[i] + n) {
+                j++;
+            }
+
             int count = j - i;
             ans = Math.min(ans, n - count);
         }
         
         return ans;
-    }
-    
-    public int binarySearch(int[] newNums, int target) {
-        int left = 0;
-        int right = newNums.length;
-        
-        while (left < right) {
-            int mid = (left + right) / 2;
-            if (target < newNums[mid]) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        
-        return left;
     }
 }
