@@ -1,31 +1,47 @@
 class Solution {
     public int[] fullBloomFlowers(int[][] flowers, int[] people) {
-        int[] sortedPeople = Arrays.copyOf(people, people.length);
-        Arrays.sort(sortedPeople);
+        TreeMap<Integer, Integer> difference = new TreeMap<>();
+        difference.put(0, 0);
         
-        Arrays.sort(flowers, (a, b) -> Arrays.compare(a, b));
-        Map<Integer, Integer> dic = new HashMap();
-        PriorityQueue<Integer> heap = new PriorityQueue();
+        for (int[] flower : flowers) {
+            int start = flower[0];
+            int end = flower[1] + 1;
+            
+            difference.put(start, difference.getOrDefault(start, 0) + 1);
+            difference.put(end, difference.getOrDefault(end, 0) - 1);
+        }
         
-        int i = 0;
-        for (int person : sortedPeople) {
-            while (i < flowers.length && flowers[i][0] <= person) {
-                heap.add(flowers[i][1]);
-                i++;
-            }
-            
-            while (!heap.isEmpty() && heap.peek() < person) {
-                heap.remove();
-            }
-            
-            dic.put(person, heap.size());
+        List<Integer> positions = new ArrayList();
+        List<Integer> prefix = new ArrayList();
+        int curr = 0;
+        
+        for (int key : difference.keySet()) {
+            positions.add(key);
+            curr += difference.get(key);
+            prefix.add(curr);
         }
         
         int[] ans = new int[people.length];
         for (int j = 0; j < people.length; j++) {
-            ans[j] = dic.get(people[j]);
+            int i = binarySearch(positions, people[j]) - 1;
+            ans[j] = prefix.get(i);
         }
         
         return ans;
+    }
+    
+    public int binarySearch(List<Integer> arr, int target) {
+        int left = 0;
+        int right = arr.size();
+        while (left < right) {
+            int mid = (left + right) / 2;
+            if (target < arr.get(mid)) {
+                right = mid;
+            } else {
+                left = mid + 1;
+            }
+        }
+        
+        return left;
     }
 }
