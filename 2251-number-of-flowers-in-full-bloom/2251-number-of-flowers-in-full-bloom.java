@@ -1,39 +1,31 @@
 class Solution {
     public int[] fullBloomFlowers(int[][] flowers, int[] people) {
-        List<Integer> starts = new ArrayList();
-        List<Integer> ends = new ArrayList();
+        int[] sortedPeople = Arrays.copyOf(people, people.length);
+        Arrays.sort(sortedPeople);
         
-        for (int[] flower: flowers) {
-            starts.add(flower[0]);
-            ends.add(flower[1] + 1);
+        Arrays.sort(flowers, (a, b) -> Arrays.compare(a, b));
+        Map<Integer, Integer> dic = new HashMap();
+        PriorityQueue<Integer> heap = new PriorityQueue();
+        
+        int i = 0;
+        for (int person : sortedPeople) {
+            while (i < flowers.length && flowers[i][0] <= person) {
+                heap.add(flowers[i][1]);
+                i++;
+            }
+            
+            while (!heap.isEmpty() && heap.peek() < person) {
+                heap.remove();
+            }
+            
+            dic.put(person, heap.size());
         }
         
-        Collections.sort(starts);
-        Collections.sort(ends);
         int[] ans = new int[people.length];
-        
-        for (int index = 0; index < people.length; index++) {
-            int person = people[index];
-            int i = binarySearch(starts, person);
-            int j = binarySearch(ends, person);
-            ans[index] = i - j;
+        for (int j = 0; j < people.length; j++) {
+            ans[j] = dic.get(people[j]);
         }
         
         return ans;
-    }
-    
-    public int binarySearch(List<Integer> arr, int target) {
-        int left = 0;
-        int right = arr.size();
-        while (left < right) {
-            int mid = (left + right) / 2;
-            if (target < arr.get(mid)) {
-                right = mid;
-            } else {
-                left = mid + 1;
-            }
-        }
-        
-        return left;
     }
 }
