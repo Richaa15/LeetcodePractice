@@ -5,7 +5,7 @@ class Solution {
         for(int  i= 0; i< n ;i++){
           temp +=  nums[i];
         }
-        int res = sum - temp;
-        return res;
+        
+        return sum - temp;
     }
 }
