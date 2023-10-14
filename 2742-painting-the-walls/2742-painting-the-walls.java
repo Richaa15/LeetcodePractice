@@ -1,20 +1,18 @@
 class Solution {
     public int paintWalls(int[] cost, int[] time) {
         int n = cost.length;
-        int[] dp = new int[n + 1];
-        int[] prevDp = new int[n + 1];
-        Arrays.fill(prevDp, (int) 1e9);
-        prevDp[0] = 0;
-
-        for (int i = n - 1; i >= 0; i--) {
-            dp = new int[n + 1];
-            for (int remain = 1; remain <= n; remain++) {
-                int paint = cost[i] + prevDp[Math.max(0, remain - 1 - time[i])];
-                int dontPaint = prevDp[remain];
-                dp[remain] = Math.min(paint, dontPaint);
+        Integer [] dp = new Integer [n + 1];
+        dp[0] = 0;
+        
+        for (int i = 0; i < n; i++) {
+            for (int j = dp.length - 1; j >= 0; j--) {
+                if (dp[j] == null) {
+                    continue;
+                }
+                
+                int nextIndex = Math.min(dp.length - 1, j + time[i] + 1);
+                dp[nextIndex] = Math.min(dp[nextIndex] == null ? Integer.MAX_VALUE : dp[nextIndex], dp[j] + cost[i]);
             }
-            
-            prevDp = dp;
         }
         
         return dp[n];
