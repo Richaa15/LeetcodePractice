@@ -1,19 +1,21 @@
 class Solution {
     public int eliminateMaximum(int[] dist, int[] speed) {
-        PriorityQueue<Double> heap = new PriorityQueue();
-        for (int i = 0; i < dist.length; i++) {
-            heap.add ((double) dist[i] / speed[i]);
+        int n = dist.length;
+
+        for (int i = 0; i < n; i++) {
+            dist[i] = (int) Math.ceil((double) dist[i] / speed[i]);
         }
-        
-        int ans = 0;
-        while (!heap.isEmpty()) {
-            if (heap.remove() <= ans) {
-                break;
+
+        Arrays.sort(dist);
+
+        int i = 0;
+        for (int j = 0; j < n; j++) {
+            if (i >= dist[j]) {
+                return i;
             }
-            
-            ans++;
+            i++;
         }
-        
-        return ans;
+
+        return n;
     }
 }
