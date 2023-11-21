@@ -7,7 +7,7 @@ class Solution {
         }
         Map<Integer, Integer> hm =  new HashMap();
         int res = 0;
-        int MOD = (int) 1e9 + 7;
+        int MOD = 1000000007;
         for(int num: arr){
             res = (res+hm.getOrDefault(num, 0)) % MOD;
             hm.put(num, hm.getOrDefault(num, 0)+1);
