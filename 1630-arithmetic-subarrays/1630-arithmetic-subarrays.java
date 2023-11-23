@@ -1,28 +1,12 @@
 class Solution {
     public Boolean check(int[] arr) {
-        int minElement = Integer.MAX_VALUE;
-        int maxElement = Integer.MIN_VALUE;
-        Set<Integer> arrSet = new HashSet();
+        Arrays.sort(arr);
+        int diff = arr[1] - arr[0];
         
-        for (int num : arr) {
-            minElement = Math.min(minElement, num);
-            maxElement = Math.max(maxElement, num);
-            arrSet.add(num);
-        }
-        
-        if ((maxElement - minElement) % (arr.length - 1) != 0) {
-            return false;
-        }
-        
-        int diff = (maxElement - minElement) / (arr.length - 1);
-        int curr = minElement + diff;
-        
-        while (curr < maxElement) {
-            if (!arrSet.contains(curr)) {
+        for (int i = 2; i < arr.length; i++) {
+            if (arr[i] - arr[i - 1] != diff) {
                 return false;
             }
-            
-            curr += diff;
         }
         
         return true;
