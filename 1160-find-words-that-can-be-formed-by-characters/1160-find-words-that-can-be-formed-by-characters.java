@@ -1,26 +1,30 @@
 class Solution {
     public int countCharacters(String[] words, String chars) {
-        Map<Character, Integer> counts = new HashMap<>();
-        for(Character c : chars.toCharArray()){
-            counts.put(c, counts.getOrDefault(c,0) +1);
+        int[] counts = new int[26];
+        for (Character c : chars.toCharArray()) {
+            counts[c - 'a']++;
         }
+        
         int ans = 0;
-        for(String w: words){
-            Map<Character, Integer> hm = new HashMap<>();
-            for(Character c: w.toCharArray()){
-                hm.put(c, hm.getOrDefault(c,0)+1);
+        for (String word : words) {
+            int[] wordCount = new int[26];
+            for (Character c : word.toCharArray()) {
+                wordCount[c - 'a']++;
             }
-            boolean flag = true;
-            for(Character c : hm.keySet()){
-                if(counts.getOrDefault(c, 0) < hm.get(c)){
-                    flag = false;
+            
+            boolean good = true;
+            for (int i = 0; i < 26; i++) {
+                if (counts[i] < wordCount[i]) {
+                    good = false;
                     break;
-}
                 }
-            if(flag) {
-                ans+= w.length();
+            }
+            
+            if (good) {
+                ans += word.length();
             }
         }
+        
         return ans;
     }
 }
