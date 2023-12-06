@@ -1,17 +1,16 @@
 class Solution {
     public int totalMoney(int n) {
-        int ans = 0;
-        int monday = 1;
+        int k = n / 7;
+        int F = 28;
+        int L = 28 + (k - 1) * 7;
+        int arithmeticSum = k * (F + L) / 2;
         
-        while (n > 0) {
-            for (int day = 0; day < Math.min(n, 7); day++) {
-                ans += monday + day;
-            }
-            
-            n -= 7;
-            monday++;
+        int monday = 1 + k;
+        int finalWeek = 0;
+        for (int day = 0; day < n % 7; day++) {
+            finalWeek += monday + day;
         }
         
-        return ans;
+        return arithmeticSum + finalWeek;
     }
 }
