@@ -4,10 +4,10 @@ class Solution {
 
         Map<Integer, Integer> hashMap = new HashMap<>();
         for (int i = 0; i < nums.length; i++) {
-            int integer = nums[i];
-            if (hashMap.containsKey(integer) && i - hashMap.get(integer) <= k)
+            int x = nums[i];
+            if (hashMap.containsKey(x) && i - hashMap.get(x) <= k)
                 return true;
-            hashMap.put(integer, i);
+            hashMap.put(x, i);
         }
         return false;
     }
