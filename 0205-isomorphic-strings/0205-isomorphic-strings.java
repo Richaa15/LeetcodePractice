@@ -11,14 +11,14 @@ class Solution {
                 if(map1.get(ch1) != ch2) {
                     return false;
                 }
-            } else {
+            } else
                 if (map2.containsKey(ch2)== true) {
                     return false;
                 } else {
                     map1.put(ch1, ch2);
                     map2.put(ch2, true);
                 }
-            }
+            
         }
         return true;
     }
